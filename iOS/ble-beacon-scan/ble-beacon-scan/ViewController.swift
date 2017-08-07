@@ -8,13 +8,14 @@
 
 import UIKit
 import CoreLocation
+import KontaktSDK
 
 
-
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var locationManager: CLLocationManager!
-
+    //var locationManager: CLLocationManager!
+    var beaconManager: KTKBeaconManager!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
 
@@ -28,9 +29,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
+        //locationManager = CLLocationManager()
+        //locationManager.delegate = self
+        //locationManager.requestAlwaysAuthorization()
+        beaconManager = KTKBeaconManager(delegate: self)
+        
+        switch KTKBeaconManager.locationAuthorizationStatus() {
+            case .notDetermined:
+                beaconManager.requestLocationAlwaysAuthorization()
+            case .denied, .restricted:
+                // No access to Location Service
+                print("access denied")
+            case .authorizedWhenInUse:
+                // For most iBeacon-based app this type of
+                // permission is not adequate
+                print("access only when in use")
+            case .authorizedAlways:
+                print("tbd")
+        }
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -43,35 +59,62 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         // Dispose of any resources that can be recreated.
     }
 
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus){
+    
+    func beaconManager(_ manager: KTKBeaconManager, didChangeLocationAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .authorizedAlways{
-            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self){
-                if CLLocationManager.isRangingAvailable(){
-                    startScanning()
-                }
+            // When status changes to CLAuthorizationStatus.authorizedAlways
+            // e.g. after calling beaconManager.requestLocationAlwaysAuthorization()
+            // we can start region monitoring from here
+            if KTKBeaconManager.isMonitoringAvailable() {
+                print("start scan")
+                startScanning()
             }
+            
         }
     }
     
     func startScanning(){
-        let uuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")!
-        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "MyBeacon")
-        
-        locationManager.startMonitoring(for: beaconRegion)
-        locationManager.startRangingBeacons(in: beaconRegion)
-    }
+        let myProximityUuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")
+        let region = KTKBeaconRegion(proximityUUID: myProximityUuid!, identifier: "Beacon region 1")
 
-    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
+
+        beaconManager.startMonitoring(for: region)
+        beaconManager.startRangingBeacons(in: region)
+
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, didStartMonitoringFor region: KTKBeaconRegion) {
+        // Do something when monitoring for a particular
+        // region is successfully initiated
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, monitoringDidFailFor region: KTKBeaconRegion?, withError error: NSError?) {
+        // Handle monitoring failing to start for your region
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, didEnter region: KTKBeaconRegion) {
+        // Decide what to do when a user enters a range of your region; usually used
+        // for triggering a local notification and/or starting a beacon ranging
+        manager.startRangingBeacons(in: region)
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, didExitRegion region: KTKBeaconRegion) {
+        // Decide what to do when a user exits a range of your region; usually used
+        // for triggering a local notification and stoping a beacon ranging
+        manager.stopRangingBeacons(in: region)
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, didRangeBeacons beacons: [CLBeacon], in region: KTKBeaconRegion) {
         if beacons.count>0{
             updateDistance(beacons[0].proximity)
             statusLabel.text = "Beacons Visible \(beacons.count)";
             beaconArray = beacons;
             tableView.reloadData()
-        } else{
+        }else{
             updateDistance(.unknown)
         }
     }
-    
+
     func updateDistance(_ distance: CLProximity){
         UIView.animate(withDuration: 0.8){
             switch distance{
