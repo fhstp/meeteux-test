@@ -9,29 +9,40 @@
 import UIKit
 import CoreLocation
 import KontaktSDK
+import Darwin
 
 
-class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDelegate, UITableViewDataSource {
-    
-    //var locationManager: CLLocationManager!
+class ViewController: UIViewController {
+
     var beaconManager: KTKBeaconManager!
-    
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
+    
 
     
     var beaconArray:[CLBeacon] = []
     
     var items: [String] = ["We", "Heart", "Swift"]
     
+    /*
+ 
+     CFra - onExhibit - 52372 37234 - Kerstin
+     eGQg - atExhibit - 18975 22350 - Kerstin
+     
+     IfGo - atExhibit - 25341	47129 - Studi-Assis
+     
+     FT45  - atExhibit - 58992	26963 - Flo
+     D7Oj  - atExhibit - 35168	49217 - Drucker
+     7N9p  - door - 59834	59993 - office 1
+     
+ */
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //locationManager = CLLocationManager()
-        //locationManager.delegate = self
-        //locationManager.requestAlwaysAuthorization()
         beaconManager = KTKBeaconManager(delegate: self)
         
         switch KTKBeaconManager.locationAuthorizationStatus() {
@@ -58,8 +69,9 @@ class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
 
-    
+extension ViewController: KTKBeaconManagerDelegate{
     func beaconManager(_ manager: KTKBeaconManager, didChangeLocationAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .authorizedAlways{
             // When status changes to CLAuthorizationStatus.authorizedAlways
@@ -76,11 +88,11 @@ class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDel
     func startScanning(){
         let myProximityUuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")
         let region = KTKBeaconRegion(proximityUUID: myProximityUuid!, identifier: "Beacon region 1")
-
-
+        
+        
         beaconManager.startMonitoring(for: region)
         beaconManager.startRangingBeacons(in: region)
-
+        
     }
     
     func beaconManager(_ manager: KTKBeaconManager, didStartMonitoringFor region: KTKBeaconRegion) {
@@ -114,7 +126,7 @@ class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDel
             updateDistance(.unknown)
         }
     }
-
+    
     func updateDistance(_ distance: CLProximity){
         UIView.animate(withDuration: 0.8){
             switch distance{
@@ -132,8 +144,11 @@ class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDel
             }
         }
     }
-    
 
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return beaconArray.count
     }
@@ -141,21 +156,31 @@ class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "cell")!
+
         
         let beacon:CLBeacon = beaconArray[indexPath.row]
         let uuid = beacon.proximityUUID.uuidString
         
+        
+      
         var d = beacon.accuracy
         d = floor(d * 10) / 10
         
         //beacon.rssi
+        let txPower = -77
+        
+        let ratio_dB:Double = Double(txPower - beacon.rssi)
+        let ratio_linear:Double = pow(10, (ratio_dB/10))
+        let r = sqrt(ratio_linear)
+        
+        
         /*final double ratio_dB = txPower - rssi;
         final double ratio_linear = Math.pow(10, (ratio_dB / 10));
         final double r = Math.sqrt(ratio_linear);*/
         
-        //cell.textLabel?.text = ("\(uuid)")
-        cell.textLabel?.text = ("\(d) meters | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
         
+        cell.textLabel?.text = ("\(d) meters | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+        //cell?.detailTextLabel?.text = ("\(uuid)")
         
         
         return cell
@@ -165,5 +190,5 @@ class ViewController: UIViewController, KTKBeaconManagerDelegate, UITableViewDel
         print("You selected cell #\(indexPath.row)!")
     }*/
    
+    
 }
-
