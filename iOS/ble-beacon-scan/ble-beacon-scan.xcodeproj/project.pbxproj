@@ -14,6 +14,7 @@
 		22A4B2501F2F3DDC001EA58C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22A4B24E1F2F3DDC001EA58C /* LaunchScreen.storyboard */; };
 		22A4B2581F2F4D17001EA58C /* BeaconTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4B2571F2F4D17001EA58C /* BeaconTable.swift */; };
 		22A4B25C1F2F4DA0001EA58C /* BeaconCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A4B25B1F2F4DA0001EA58C /* BeaconCellTableViewCell.swift */; };
+		EFC0626035F5A91417936DA9 /* Pods_ble_beacon_scan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F021B35F87D53A14A436177C /* Pods_ble_beacon_scan.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,9 @@
 		22A4B2511F2F3DDC001EA58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22A4B2571F2F4D17001EA58C /* BeaconTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconTable.swift; sourceTree = "<group>"; };
 		22A4B25B1F2F4DA0001EA58C /* BeaconCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconCellTableViewCell.swift; sourceTree = "<group>"; };
+		A57DC53B0B087048070A6011 /* Pods-ble-beacon-scan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ble-beacon-scan.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ble-beacon-scan/Pods-ble-beacon-scan.debug.xcconfig"; sourceTree = "<group>"; };
+		F021B35F87D53A14A436177C /* Pods_ble_beacon_scan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ble_beacon_scan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDC47349B777C6DD82B1D5D0 /* Pods-ble-beacon-scan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ble-beacon-scan.release.xcconfig"; path = "Pods/Target Support Files/Pods-ble-beacon-scan/Pods-ble-beacon-scan.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFC0626035F5A91417936DA9 /* Pods_ble_beacon_scan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +49,8 @@
 			children = (
 				22A4B2441F2F3DDC001EA58C /* ble-beacon-scan */,
 				22A4B2431F2F3DDC001EA58C /* Products */,
+				BE00E9D0385180227369F9C1 /* Pods */,
+				BFD0099163100D440E0421E5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,6 +77,23 @@
 			path = "ble-beacon-scan";
 			sourceTree = "<group>";
 		};
+		BE00E9D0385180227369F9C1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A57DC53B0B087048070A6011 /* Pods-ble-beacon-scan.debug.xcconfig */,
+				FDC47349B777C6DD82B1D5D0 /* Pods-ble-beacon-scan.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BFD0099163100D440E0421E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F021B35F87D53A14A436177C /* Pods_ble_beacon_scan.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,9 +101,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22A4B2541F2F3DDC001EA58C /* Build configuration list for PBXNativeTarget "ble-beacon-scan" */;
 			buildPhases = (
+				C21D10F3C2F7147D9D4BB2DA /* [CP] Check Pods Manifest.lock */,
 				22A4B23E1F2F3DDC001EA58C /* Sources */,
 				22A4B23F1F2F3DDC001EA58C /* Frameworks */,
 				22A4B2401F2F3DDC001EA58C /* Resources */,
+				04767FD73FCCD07010D58212 /* [CP] Embed Pods Frameworks */,
+				47F6A836D14F4A66EC743E69 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -137,6 +164,60 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04767FD73FCCD07010D58212 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ble-beacon-scan/Pods-ble-beacon-scan-frameworks.sh",
+				"${PODS_ROOT}/KontaktSDK/Cocoapods/iOS/KontaktSDK.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KontaktSDK.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ble-beacon-scan/Pods-ble-beacon-scan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		47F6A836D14F4A66EC743E69 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ble-beacon-scan/Pods-ble-beacon-scan-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C21D10F3C2F7147D9D4BB2DA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ble-beacon-scan-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		22A4B23E1F2F3DDC001EA58C /* Sources */ = {
@@ -269,6 +350,7 @@
 		};
 		22A4B2551F2F3DDC001EA58C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A57DC53B0B087048070A6011 /* Pods-ble-beacon-scan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = ZCQ554RK9U;
@@ -282,6 +364,7 @@
 		};
 		22A4B2561F2F3DDC001EA58C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FDC47349B777C6DD82B1D5D0 /* Pods-ble-beacon-scan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = ZCQ554RK9U;
