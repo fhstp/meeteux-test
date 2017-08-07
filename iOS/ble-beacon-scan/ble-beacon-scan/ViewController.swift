@@ -25,6 +25,51 @@ class ViewController: UIViewController {
     
     var items: [String] = ["We", "Heart", "Swift"]
     
+    var exhibits: [[String:Any]] = [
+        [
+            "ID" : "CFra",
+            "location-type" : "onExhibit",
+            "ble-major" : 52372,
+            "ble-minor" : 37234,
+            "location-name" : "Kerstin on"
+        ],
+        [
+            "ID" : "eGQg",
+            "location-type" : "atExhibit",
+            "ble-major" : 18975,
+            "ble-minor" : 22350,
+            "location-name" : "Kerstin at"
+        ],
+        [
+            "ID" : "IfGo",
+            "location-type" : "atExhibit",
+            "ble-major" : 25341,
+            "ble-minor" : 47129,
+            "location-name" : "Stud Assi at"
+        ],
+        [
+            "ID" : "FT45",
+            "location-type" : "atExhibit",
+            "ble-major" : 58992,
+            "ble-minor" : 26963,
+            "location-name" : "Flo at"
+        ],
+        [
+            "ID" : "D7Oj",
+            "location-type" : "atExhibit",
+            "ble-major" : 35168,
+            "ble-minor" : 49217,
+            "location-name" : "Drucker at"
+        ],
+        [
+            "ID" : "7N9p",
+            "location-type" : "atExhibit",
+            "ble-major" : 59834,
+            "ble-minor" : 59993,
+            "location-name" : "Door office 1"
+        ]
+    ]
+    
     /*
  
      CFra - onExhibit - 52372 37234 - Kerstin
@@ -118,16 +163,47 @@ extension ViewController: KTKBeaconManagerDelegate{
     
     func beaconManager(_ manager: KTKBeaconManager, didRangeBeacons beacons: [CLBeacon], in region: KTKBeaconRegion) {
         if beacons.count>0{
-            updateDistance(beacons[0].proximity)
-            statusLabel.text = "Beacons Visible \(beacons.count)";
+            //updateDistance(beacons[0].proximity)
+            
             beaconArray = beacons;
             tableView.reloadData()
-        }else{
+            
+            let myBeacon = beaconArray[0]
+            let myMajor = beaconArray[0].major
+            print("Major \(myMajor)")
+            
+            let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
+                if(exhibit["ble-major"] as! Int == myBeacon.major as! Int){
+                    print("same")
+                    print(exhibit)
+                    
+                    updateExhibit(myBeacon.proximity, exhibit: exhibit)
+
+                    return true
+                }
+                /*print(exhibit["ble-major"] as! Int)
+                print(myBeacon.major as! Int)*/
+                return false
+            })
+            
+           // let beacon1 = keyOfBeacon(major: beaconArray[0].major as! Int)
+            print("beacon \(beacon1)")
+
+        }/*else{
             updateDistance(.unknown)
-        }
+        }*/
     }
+    /*
+    func keyOfBeacon(major: Int) -> String {
+        return exhibits.index { (exhibit) -> Bool in
+            return exhibit["major"] as? Int == major
+            } ?? NSNotFound
+    }*/
     
-    func updateDistance(_ distance: CLProximity){
+    func updateExhibit(_ distance: CLProximity, exhibit: [String:Any]){
+        
+        let locationName = exhibit["location-name"]
+        statusLabel.text = "Your are \(locationName!)";
         UIView.animate(withDuration: 0.8){
             switch distance{
             case .far:
@@ -171,7 +247,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         
         let ratio_dB:Double = Double(txPower - beacon.rssi)
         let ratio_linear:Double = pow(10, (ratio_dB/10))
-        let r = sqrt(ratio_linear)
+        let r = round(sqrt(ratio_linear))
+        
+        let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
+            if(exhibit["ble-major"] as! Int == beacon.major as! Int){
+                print("same")
+                print(exhibit)
+                
+                
+                cell.textLabel?.text = ("\(exhibit["location-name"]!) | \(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+                
+                return true
+            }
+            /*print(exhibit["ble-major"] as! Int)
+             print(myBeacon.major as! Int)*/
+            cell.textLabel?.text = ("\(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+            return false
+        })
         
         
         /*final double ratio_dB = txPower - rssi;
@@ -179,7 +271,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         final double r = Math.sqrt(ratio_linear);*/
         
         
-        cell.textLabel?.text = ("\(d) meters | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+        //cell.textLabel?.text = ("\(d) meters | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+        //cell.textLabel?.text = ("\(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+        //cell.textLabel?.text = ("\(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
         //cell?.detailTextLabel?.text = ("\(uuid)")
         
         
