@@ -4,6 +4,9 @@ package at.ac.fhstp.meeteux.blescan2;
 import android.Manifest;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kontakt.sdk.android.ble.connection.OnServiceReadyListener;
@@ -20,7 +23,12 @@ import com.kontakt.sdk.android.common.profile.IBeaconRegion;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+
+import okhttp3.Headers;
+
+import static android.R.id.list;
 
 public class MainActivity extends AbsRuntimePermission {
     private static final int REQUEST_PERMISSION = 10;
@@ -52,7 +60,7 @@ public class MainActivity extends AbsRuntimePermission {
         KontaktSDK.initialize(this);
         proximityManager = ProximityManagerFactory.create(this);
 
-/*
+
         Collection<IBeaconRegion> beaconRegions = new ArrayList<>();
 
         IBeaconRegion region1 = new BeaconRegion.Builder()
@@ -64,9 +72,36 @@ public class MainActivity extends AbsRuntimePermission {
         beaconRegions.add(region1);
 
         proximityManager.spaces().iBeaconRegions(beaconRegions);
-*/
 
-        proximityManager.setIBeaconListener(createIBeaconListener());
+
+        /* proximityManager.setIBeaconListener(createIBeaconListener()); */
+
+        proximityManager.setIBeaconListener(new IBeaconListener() {
+            @Override
+            public void onIBeaconDiscovered(IBeaconDevice iBeacon, IBeaconRegion region) {
+                //Beacon discovered
+                Log.i("Sample", "Beacon discovered");
+                Log.i("Sample", "IBeacon discovered: " + iBeacon.toString());
+
+            }
+
+            @Override
+            public void onIBeaconsUpdated(List<IBeaconDevice> iBeacons, IBeaconRegion region) {
+                //Beacons updated
+                Log.i("Sample", "Beacon updated");
+                Log.i("Sample", "IBeacon updated: " + iBeacons.toString());
+
+            }
+
+
+            @Override
+            public void onIBeaconLost(IBeaconDevice iBeacon, IBeaconRegion region) {
+                //Beacon lost
+                Log.i("Sample", "Beacon lost");
+                Log.i("Sample", "IBeacon lost: " + iBeacon.toString());
+            }
+        });
+
         proximityManager.setScanStatusListener(createScanStatusListener());
 
     }

@@ -56,8 +56,8 @@ public abstract class AbsRuntimePermission extends Activity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         int permissionCheck = PackageManager.PERMISSION_GRANTED;
-        for(int permisson : grantResults) {
-            permissionCheck = permissionCheck + permisson;
+        for(int permission : grantResults) {
+            permissionCheck = permissionCheck + permission;
         }
 
         if( (grantResults.length > 0) && PackageManager.PERMISSION_GRANTED == permissionCheck) {
