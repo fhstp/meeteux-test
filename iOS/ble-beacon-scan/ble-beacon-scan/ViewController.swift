@@ -70,19 +70,6 @@ class ViewController: UIViewController {
         ]
     ]
     
-    /*
- 
-     CFra - onExhibit - 52372 37234 - Kerstin
-     eGQg - atExhibit - 18975 22350 - Kerstin
-     
-     IfGo - atExhibit - 25341	47129 - Studi-Assis
-     
-     FT45  - atExhibit - 58992	26963 - Flo
-     D7Oj  - atExhibit - 35168	49217 - Drucker
-     7N9p  - door - 59834	59993 - office 1
-     
- */
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -194,12 +181,6 @@ extension ViewController: KTKBeaconManagerDelegate{
             updateDistance(.unknown)
         }*/
     }
-    /*
-    func keyOfBeacon(major: Int) -> String {
-        return exhibits.index { (exhibit) -> Bool in
-            return exhibit["major"] as? Int == major
-            } ?? NSNotFound
-    }*/
     
     func updateExhibit(_ distance: CLProximity, exhibit: [String:Any]){
         
