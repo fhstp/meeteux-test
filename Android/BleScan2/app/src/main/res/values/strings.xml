@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BleScan2</string>
+    <string name="kontakt_io_api_key">irQEOLsyDSbRVwtHPpQexDqDwyixACwl</string>
+    <string name="msg">Please enable all permissions</string>
+</resources>
