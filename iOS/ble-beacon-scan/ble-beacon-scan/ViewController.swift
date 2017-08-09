@@ -29,43 +29,43 @@ class ViewController: UIViewController {
         [
             "ID" : "CFra",
             "location-type" : "onExhibit",
-            "ble-major" : 52372,
-            "ble-minor" : 37234,
+            "ble-major" : 10,
+            "ble-minor" : 100,
             "location-name" : "Kerstin on"
         ],
         [
             "ID" : "eGQg",
             "location-type" : "atExhibit",
-            "ble-major" : 18975,
-            "ble-minor" : 22350,
+            "ble-major" : 10,
+            "ble-minor" : 101,
             "location-name" : "Kerstin at"
         ],
         [
             "ID" : "IfGo",
             "location-type" : "atExhibit",
-            "ble-major" : 25341,
-            "ble-minor" : 47129,
+            "ble-major" : 10,
+            "ble-minor" : 1002,
             "location-name" : "Stud Assi at"
         ],
         [
             "ID" : "FT45",
             "location-type" : "atExhibit",
-            "ble-major" : 58992,
-            "ble-minor" : 26963,
+            "ble-major" : 10,
+            "ble-minor" : 1000,
             "location-name" : "Flo at"
         ],
         [
             "ID" : "D7Oj",
             "location-type" : "atExhibit",
-            "ble-major" : 35168,
-            "ble-minor" : 49217,
+            "ble-major" : 10,
+            "ble-minor" : 1001,
             "location-name" : "Drucker at"
         ],
         [
             "ID" : "7N9p",
             "location-type" : "atExhibit",
-            "ble-major" : 59834,
-            "ble-minor" : 59993,
+            "ble-major" : 10,
+            "ble-minor" : 10,
             "location-name" : "Door office 1"
         ]
     ]
@@ -169,11 +169,12 @@ extension ViewController: KTKBeaconManagerDelegate{
             tableView.reloadData()
             
             let myBeacon = beaconArray[0]
-            let myMajor = beaconArray[0].major
-            print("Major \(myMajor)")
+            let myMinor = beaconArray[0].minor
+            
+            print("Minor \(myMinor)")
             
             let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
-                if(exhibit["ble-major"] as! Int == myBeacon.major as! Int){
+                if(exhibit["ble-minor"] as! Int == myBeacon.minor as! Int){
                     print("same")
                     print(exhibit)
                     
@@ -250,7 +251,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         let r = round(sqrt(ratio_linear))
         
         let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
-            if(exhibit["ble-major"] as! Int == beacon.major as! Int){
+            if(exhibit["ble-minor"] as! Int == beacon.minor as! Int){
                 print("same")
                 print(exhibit)
                 
