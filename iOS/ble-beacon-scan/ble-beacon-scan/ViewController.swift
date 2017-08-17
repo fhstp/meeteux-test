@@ -6,6 +6,15 @@
 //  Copyright © 2017 Kerstin Blumenstein. All rights reserved.
 //
 
+// MARK: visible in jump bar
+
+// TODO: Do this
+
+// FIXME: Fix this
+
+// MARK: - Add a seperator above this
+
+
 import UIKit
 import CoreLocation
 import KontaktSDK
@@ -15,15 +24,13 @@ import Darwin
 class ViewController: UIViewController {
 
     var beaconManager: KTKBeaconManager!
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
     
 
+    var beaconList:[CLBeacon] = []
     
-    var beaconArray:[CLBeacon] = []
-    
-    var items: [String] = ["We", "Heart", "Swift"]
     
     var exhibits: [[String:Any]] = [
         [
@@ -149,37 +156,74 @@ extension ViewController: KTKBeaconManagerDelegate{
     }
     
     func beaconManager(_ manager: KTKBeaconManager, didRangeBeacons beacons: [CLBeacon], in region: KTKBeaconRegion) {
-        if beacons.count>0{
+        
+        beaconList = []
+        // Go through beacons, check if it is our and reliable --> push into empty beaconList
+        beacons.forEach { beacon in
+            if(isOurBeaconReliable(myBeacon: beacon)){
+               // if(beaconList.count == 0){
+                    beaconList.append(beacon)
+               /* }else{
+                    for(index, listBeacon) in beaconList.enumerated(){
+                        if(beacon.minor == listBeacon.minor){
+                            beaconList[index] = (beacon)
+                        }else{
+                            beaconList.append(beacon)
+                        }
+                    }
+                }*/
+            }
+        }
+        
+       /* print("-------")
+        
+        print(beaconList)*/
+        
+        if beaconList.count>0{
             //updateDistance(beacons[0].proximity)
             
-            beaconArray = beacons;
+            //beaconList = beacons;
+        
             tableView.reloadData()
             
-            let myBeacon = beaconArray[0]
-            let myMinor = beaconArray[0].minor
             
-            print("Minor \(myMinor)")
+            
+            let myBeacon = beaconList[0]
+
             
             let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
                 if(exhibit["ble-minor"] as! Int == myBeacon.minor as! Int){
-                    print("same")
-                    print(exhibit)
-                    
+                    //print("same")
+                    //print(exhibit)
                     updateExhibit(myBeacon.proximity, exhibit: exhibit)
-
                     return true
                 }
-                /*print(exhibit["ble-major"] as! Int)
-                print(myBeacon.major as! Int)*/
                 return false
             })
             
            // let beacon1 = keyOfBeacon(major: beaconArray[0].major as! Int)
-            print("beacon \(beacon1)")
+           // print("beacon \(String(describing: beacon1))")
 
         }/*else{
             updateDistance(.unknown)
         }*/
+    }
+    
+    
+    // Check if Beacon is reliable (rssi < 0) and if it is in our range compared to exhibits (later LUT)
+    func isOurBeaconReliable(myBeacon: CLBeacon) -> Bool{
+        
+        var beaconResult:Bool = false
+        
+        if(myBeacon.rssi < 0){
+            exhibits.forEach{exhibit in
+                if(exhibit["ble-minor"] as! Int == myBeacon.minor as! Int){
+                    beaconResult = true
+                }
+            }
+        }
+        
+        return beaconResult
     }
     
     func updateExhibit(_ distance: CLProximity, exhibit: [String:Any]){
@@ -208,7 +252,7 @@ extension ViewController: KTKBeaconManagerDelegate{
 extension ViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return beaconArray.count
+        return beaconList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -216,7 +260,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "cell")!
 
         
-        let beacon:CLBeacon = beaconArray[indexPath.row]
+        let beacon:CLBeacon = beaconList[indexPath.row]
         let uuid = beacon.proximityUUID.uuidString
         
         
@@ -233,16 +277,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         
         let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
             if(exhibit["ble-minor"] as! Int == beacon.minor as! Int){
-                print("same")
-                print(exhibit)
-                
-                
                 cell.textLabel?.text = ("\(exhibit["location-name"]!) | \(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
                 
                 return true
             }
-            /*print(exhibit["ble-major"] as! Int)
-             print(myBeacon.major as! Int)*/
             cell.textLabel?.text = ("\(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
             return false
         })
