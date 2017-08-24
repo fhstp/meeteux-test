@@ -23,16 +23,24 @@ import com.kontakt.sdk.android.common.profile.IBeaconRegion;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
 import okhttp3.Headers;
 
 import static android.R.id.list;
+import static at.ac.fhstp.meeteux.blescan2.R.id.listView;
 
 public class MainActivity extends AbsRuntimePermission {
     private static final int REQUEST_PERMISSION = 10;
     private ProximityManager proximityManager;
+
+
+    ListView listView;
+    String[] beaconItems;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,9 @@ public class MainActivity extends AbsRuntimePermission {
                 },
                 R.string.msg,
                 REQUEST_PERMISSION);
+
+        listView = (ListView) findViewById(R.id.listView);
+
 
 
     }
@@ -90,7 +101,34 @@ public class MainActivity extends AbsRuntimePermission {
                 //Beacons updated
                 Log.i("Sample", "Beacon updated");
                 Log.i("Sample", "IBeacon updated: " + iBeacons.toString());
+                //readBeaconData(iBeacons);
+                beaconItems = new String[iBeacons.size()];
+                List<IBeaconDevice> newList = new ArrayList<>(iBeacons);
+                Collections.sort(newList, new Comparator<IBeaconDevice>() {
+                    @Override
+                    public int compare(IBeaconDevice lhs, IBeaconDevice rhs) {
+                        int returnVal = 0;
 
+                        if(lhs.getRssi() < rhs.getRssi()){
+                            returnVal =  1;
+                        }else if(lhs.getRssi() > rhs.getRssi()){
+                            returnVal =  -1;
+                        }else if(lhs.getRssi() == rhs.getRssi()){
+                            returnVal =  0;
+                        }
+                        return returnVal;
+                    }
+                });
+
+
+
+                for(int i = 0; i<newList.size();i++) {
+                    String beaconName = "Major " + newList.get(i).getMajor() + " " + "Minor " + newList.get(i).getMinor();
+                    String beaconRssi = "RSSI " + String.valueOf(newList.get(i).getRssi());
+                    beaconItems[i] = beaconName + " " + beaconRssi;
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, beaconItems);
+                listView.setAdapter(adapter);
             }
 
 
@@ -171,4 +209,6 @@ public class MainActivity extends AbsRuntimePermission {
             }
         };
     }
+
+
 }
