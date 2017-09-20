@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kontakt.sdk.android.ble.configuration.ActivityCheckConfiguration;
@@ -47,6 +50,7 @@ public class MainActivity extends AbsRuntimePermission {
 
     ListView listView;
     String[] beaconItems;
+    View view;
 
     private static final Object SINGLETON_LOCK = new Object();
     protected static volatile BeaconManager sInstance = null;
@@ -100,7 +104,7 @@ public class MainActivity extends AbsRuntimePermission {
 
         proximityManager.spaces().iBeaconRegions(beaconRegions);
       //  proximityManager.configuration().activityCheckConfiguration(ActivityCheckConfiguration.MINIMAL);
-        proximityManager.configuration().deviceUpdateCallbackInterval(1000);
+        proximityManager.configuration().deviceUpdateCallbackInterval(500);
 
         /* proximityManager.setIBeaconListener(createIBeaconListener()); */
 
@@ -150,9 +154,14 @@ public class MainActivity extends AbsRuntimePermission {
 
 
                 for(int i = 0; i<newList.size();i++) {
+
                     String beaconName = "Major " + newList.get(i).getMajor() + " " + "Minor " + newList.get(i).getMinor();
                     String beaconRssi = "RSSI " + String.valueOf(newList.get(i).getRssi());
                     beaconItems[i] = beaconName + " " + beaconRssi;
+                    if(i==0){
+                        TextView textView = (TextView) findViewById(R.id.txtNearest);
+                        textView.setText(beaconItems[i]);
+                    }
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, beaconItems);
                 listView.setAdapter(adapter);
