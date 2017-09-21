@@ -183,7 +183,13 @@ extension ViewController: KTKBeaconManagerDelegate{
         beacons.forEach { beacon in
             if(isOurBeaconReliable(myBeacon: beacon)){
                // if(beaconList.count == 0){
+                if(beacon.major == 10 && beacon.proximity == .immediate){
+                    print("immediate")
                     beaconList.append(beacon)
+                }else if(beacon.major == 20 && beacon.proximity == .near){
+                    print("near")
+                    beaconList.append(beacon)
+                }
                /* }else{
                     for(index, listBeacon) in beaconList.enumerated(){
                         if(beacon.minor == listBeacon.minor){
@@ -297,12 +303,29 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         let r = round(sqrt(ratio_linear))
         
         let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
+            var proximity = ""
+            
+            switch beacon.proximity{
+            case .far:
+             proximity = "far"
+                
+            case .near:
+                proximity = "near"
+                
+            case .immediate:
+                proximity = "immediate"
+                
+            default:
+                proximity = "unknown"
+            }
+            
+            print(proximity)
             if(exhibit["ble-minor"] as! Int == beacon.minor as! Int){
-                cell.textLabel?.text = ("major: \(beacon.major) | minor \(beacon.minor)  | rssi \(beacon.rssi)| " )
+                cell.textLabel?.text = ("major: \(beacon.major) | minor \(beacon.minor)  | rssi \(beacon.rssi) | \(proximity)" )
                 //\(exhibit["location-name"]!) | \(d) | \(r) |
                 return true
             }
-            cell.textLabel?.text = ("major: \(beacon.major) | minor \(beacon.minor) | rssi \(beacon.rssi)|" )
+            cell.textLabel?.text = ("major: \(beacon.major) | minor \(beacon.minor) | rssi \(beacon.rssi) |  \(proximity)" )
             return false
         })
         
