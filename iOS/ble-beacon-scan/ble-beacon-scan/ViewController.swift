@@ -35,45 +35,66 @@ class ViewController: UIViewController {
     var exhibits: [[String:Any]] = [
         [
             "ID" : "CFra",
-            "location-type" : "onExhibit",
+            "location-type" : "Door",
             "ble-major" : 10,
             "ble-minor" : 100,
-            "location-name" : "Kerstin on"
+            "location-name" : "Door Out"
         ],
         [
             "ID" : "eGQg",
-            "location-type" : "atExhibit",
+            "location-type" : "Door",
             "ble-major" : 10,
             "ble-minor" : 101,
-            "location-name" : "Kerstin at"
+            "location-name" : "Door In"
         ],
         [
             "ID" : "IfGo",
-            "location-type" : "atExhibit",
+            "location-type" : "on",
             "ble-major" : 10,
             "ble-minor" : 1002,
-            "location-name" : "Stud Assi at"
+            "location-name" : "On 1"
         ],
         [
             "ID" : "FT45",
-            "location-type" : "atExhibit",
+            "location-type" : "on",
             "ble-major" : 10,
             "ble-minor" : 1000,
-            "location-name" : "Flo at"
+            "location-name" : "On 4"
         ],
         [
             "ID" : "D7Oj",
-            "location-type" : "atExhibit",
+            "location-type" : "on",
             "ble-major" : 10,
             "ble-minor" : 1001,
-            "location-name" : "Drucker at"
+            "location-name" : "On 2"
         ],
         [
             "ID" : "7N9p",
-            "location-type" : "atExhibit",
+            "location-type" : "on",
             "ble-major" : 10,
             "ble-minor" : 10,
-            "location-name" : "Door office 1"
+            "location-name" : "On 3"
+        ],
+        [
+            "ID" : "VFRe",
+            "location-type" : "at",
+            "ble-major" : 10,
+            "ble-minor" : 102,
+            "location-name" : "At Table"
+        ],
+        [
+            "ID" : "gvqA",
+            "location-type" : "at",
+            "ble-major" : 10,
+            "ble-minor" : 1003,
+            "location-name" : "atExhibit 1"
+        ],
+        [
+            "ID" : "T44q",
+            "location-type" : "at",
+            "ble-major" : 10,
+            "ble-minor" : 1004,
+            "location-name" : "atExhibit 2"
         ]
     ]
     
@@ -277,11 +298,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource{
         
         let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
             if(exhibit["ble-minor"] as! Int == beacon.minor as! Int){
-                cell.textLabel?.text = ("\(exhibit["location-name"]!) | \(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
-                
+                cell.textLabel?.text = ("major: \(beacon.major) | minor \(beacon.minor)  | rssi \(beacon.rssi)| " )
+                //\(exhibit["location-name"]!) | \(d) | \(r) |
                 return true
             }
-            cell.textLabel?.text = ("\(d) | \(r) | rssi \(beacon.rssi)| major: \(beacon.major) | minor \(beacon.minor) " )
+            cell.textLabel?.text = ("major: \(beacon.major) | minor \(beacon.minor) | rssi \(beacon.rssi)|" )
             return false
         })
         
