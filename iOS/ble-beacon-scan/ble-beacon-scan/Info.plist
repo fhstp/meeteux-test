@@ -34,6 +34,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We want to detect Bluetooth Beacons nearby.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We want to detect Bluetooth Beacons nearby.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We want to detect Bluetooth Beacons nearby.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
