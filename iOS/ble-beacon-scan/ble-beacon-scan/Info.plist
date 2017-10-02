@@ -36,6 +36,8 @@
 	</array>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We want to detect Bluetooth Beacons nearby.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>We want to detect Bluetooth Beacons nearby.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We want to detect Bluetooth Beacons nearby.</string>
 	<key>NSLocationAlwaysUsageDescription</key>

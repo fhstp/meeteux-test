@@ -146,6 +146,7 @@ extension ViewController: KTKBeaconManagerDelegate{
     }
     
     func startScanning(){
+        print("in start scan")
         let myProximityUuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")
         let region = KTKBeaconRegion(proximityUUID: myProximityUuid!, identifier: "Beacon region 1")
         
