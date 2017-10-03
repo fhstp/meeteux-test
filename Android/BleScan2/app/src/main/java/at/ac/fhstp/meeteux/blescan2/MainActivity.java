@@ -50,6 +50,7 @@ public class MainActivity extends AbsRuntimePermission {
 
     ListView listView;
     String[] beaconItems;
+    String[] beaconItemsProxi;
     View view;
 
     private static final Object SINGLETON_LOCK = new Object();
@@ -104,7 +105,7 @@ public class MainActivity extends AbsRuntimePermission {
 
         proximityManager.spaces().iBeaconRegions(beaconRegions);
       //  proximityManager.configuration().activityCheckConfiguration(ActivityCheckConfiguration.MINIMAL);
-        proximityManager.configuration().deviceUpdateCallbackInterval(500);
+        proximityManager.configuration().deviceUpdateCallbackInterval(250);
 
         /* proximityManager.setIBeaconListener(createIBeaconListener()); */
 
@@ -152,17 +153,26 @@ public class MainActivity extends AbsRuntimePermission {
                 });
 
 
-
+                int helpCounter = 0;
                 for(int i = 0; i<newList.size();i++) {
-
-                    String beaconName = "Major " + newList.get(i).getMajor() + " " + "Minor " + newList.get(i).getMinor();
-                    String beaconRssi = "RSSI " + String.valueOf(newList.get(i).getRssi());
-                    beaconItems[i] = beaconName + " " + beaconRssi;
-                    if(i==0){
-                        TextView textView = (TextView) findViewById(R.id.txtNearest);
-                        textView.setText(beaconItems[i]);
+                    //String helpString = newList.get(i).getProximity() + "";
+                    if(newList.get(i).getMajor()==20&&String.valueOf(newList.get(i).getProximity()).equals("NEAR")) {
+                        String beaconName = "Major " + newList.get(i).getMajor() + " " + "Minor " + newList.get(i).getMinor() + " " + "Proximity " + newList.get(i).getProximity();
+                        String beaconRssi = "RSSI " + String.valueOf(newList.get(i).getRssi());
+                        beaconItems[helpCounter] = beaconName + " " + beaconRssi;
+                        helpCounter++;
+                    }else if(newList.get(i).getMajor()==10&&String.valueOf(newList.get(i).getProximity()).equals("IMMEDIATE")){
+                        String beaconName = "Major " + newList.get(i).getMajor() + " " + "Minor " + newList.get(i).getMinor() + " " + "Proximity " + newList.get(i).getProximity();
+                        String beaconRssi = "RSSI " + String.valueOf(newList.get(i).getRssi());
+                        beaconItems[helpCounter] = beaconName + " " + beaconRssi;
+                        helpCounter++;
+                    }else{
+                        beaconItems[helpCounter]="";
+                        helpCounter++;
                     }
                 }
+                    TextView textView = (TextView) findViewById(R.id.txtNearest);
+                    textView.setText(beaconItems[0]);
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, android.R.id.text1, beaconItems);
                 listView.setAdapter(adapter);
             }
