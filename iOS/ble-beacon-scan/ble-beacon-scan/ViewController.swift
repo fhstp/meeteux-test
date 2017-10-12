@@ -203,6 +203,10 @@ extension ViewController: KTKBeaconManagerDelegate{
             }
         }
         
+        // TODO sort beacon list
+        beaconList.sorted(by: { $0.rssi > $1.rssi })
+        
+        
        /* print("-------")
         
         print(beaconList)*/
