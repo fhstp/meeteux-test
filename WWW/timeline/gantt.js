@@ -3,6 +3,8 @@
  * @version 2.0
  *
  * Ported to d3 v4 by Keyvan Fatehi on October 16th, 2016
+ * 
+ * adapted for vertical use by Kerstin Blumenstein
  */
 
 d3.gantt = function() {
@@ -85,7 +87,7 @@ d3.gantt = function() {
       x = d3.scaleBand().domain(taskTypes).rangeRound([ 0, height - margin.top - margin.bottom ], .1);
 
       yAxis = d3.axisBottom().scale(x).tickFormat(d3.timeFormat(tickFormat))
-      .tickSize(8).tickPadding(8);
+    .tickSize(8).tickPadding(8);
 
         xAxis = d3.axisLeft().scale(y).tickSize(0);
 
