@@ -23,9 +23,9 @@ d3.gantt = function() {
     var taskTypes = [];
     var taskStatus = [];
     //var height = document.body.clientHeight - margin.top - margin.bottom-5;
-    var height = 200;
+    var height = 600;
     //var width = document.body.clientWidth - margin.right - margin.left-5;
-    var width = 1200;
+    var width = 80;
     var minDate;
     var maxDate;
     var orientation; // horizontal || vertical
@@ -82,14 +82,14 @@ d3.gantt = function() {
   
       yAxis = d3.axisLeft().scale(y).tickSize(0);*/
 
-      y = d3.scaleTime().domain([ timeDomainStart, timeDomainEnd ]).range([ 0, width ]).clamp(true);
+      y = d3.scaleTime().domain([ timeDomainStart, timeDomainEnd ]).range([ 0, height ]).clamp(true);
   
-      x = d3.scaleBand().domain(taskTypes).rangeRound([ 0, height - margin.top - margin.bottom ], .1);
+      x = d3.scaleBand().domain(taskTypes).rangeRound([ 0, width - margin.top - margin.bottom ], .1);
 
-      yAxis = d3.axisBottom().scale(x).tickFormat(d3.timeFormat(tickFormat))
+      xAxis = d3.axisBottom().scale(x).tickFormat(d3.timeFormat(tickFormat))
     .tickSize(8).tickPadding(8);
 
-        xAxis = d3.axisLeft().scale(y).tickSize(0);
+        yAxis = d3.axisLeft().scale(y).tickSize(0).ticks(5);
 
     };
   
@@ -101,10 +101,8 @@ d3.gantt = function() {
       var svg = d3.select("body")
         .append("svg")
         .attr("class", "chart")
-        /*.attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)*/
-        .attr("width", 500)
-        .attr("height", 1250)
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("class", "gantt-chart")
         .attr("width", width + margin.left + margin.right)
@@ -122,14 +120,14 @@ d3.gantt = function() {
         .attr("height", function(d) { 
             return (y(d.endDate) - y(d.startDate)); 
           })
-        .attr("width", function(d) { return 70; }
+        .attr("width", function(d) { return 15; }
         );
 
-
         svg.append("g")
-            .attr("class", "x axis")
-            .transition()
-            .call(xAxis);
+        .attr("class", "y axis")
+        .transition()
+        .call(yAxis);
+        
 
 
        /* svg.append("g")
