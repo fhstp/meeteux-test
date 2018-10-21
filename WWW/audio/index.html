@@ -1,0 +1,39 @@
+<!DOCTYPE html> 
+<html> 
+<body> 
+
+<button onclick="playAudio1()" type="button">Play Audio 1</button>
+<button onclick="playAudio2()" type="button">Play Audio 2</button>
+<button onclick="pauseAudio()" type="button">Pause Audio 2</button><br> 
+
+<audio id="myAudio1">
+  <source src="piano2.wav" type="audio/wav">
+  Your browser does not support HTML5 audio.
+</audio>
+
+<audio id="myAudio2">
+    <source src="WAV-MP3.wav" type="audio/wav">
+    Your browser does not support HTML5 audio.
+  </audio>
+
+<script> 
+var audio1 = document.getElementById("myAudio1"); 
+var audio2 = document.getElementById("myAudio2");
+audio1.loop = true; 
+
+function playAudio1() { 
+    audio1.play(); 
+} 
+
+function playAudio2() { 
+    audio2.play(); 
+} 
+
+function pauseAudio() { 
+    audio2.pause(); 
+} 
+</script> 
+
+
+</body> 
+</html>
