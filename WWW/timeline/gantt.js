@@ -111,6 +111,8 @@ d3.gantt = function() {
   
       svg.selectAll(".chart")
         .data(tasks, keyFunction).enter()
+        .append('g')
+        .attr('class', 'rectEl')
         .append("rect")
         .attr("rx", 5)
         .attr("ry", 5)
@@ -121,7 +123,20 @@ d3.gantt = function() {
             return (y(d.endDate) - y(d.startDate)); 
           })
         .attr("width", function(d) { return 15; }
-        );
+        )
+        
+        svg.selectAll('.rectEl')
+        .append("rect")
+        .attr("rx", 2)
+        .attr('ry', 2)
+        .attr('class', 'textElements')
+        .attr('x', 20)
+        .attr('transform', rectTransform)
+        .attr('height', 100)
+        .attr('width', 100)
+        .attr('fill', 'red')
+          .append('text')
+          .text('Test');
 
         svg.append("g")
         .attr("class", "y axis")
