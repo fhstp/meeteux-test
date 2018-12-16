@@ -5,34 +5,40 @@ var persons = [{
     "died": 1136,
     "born": 1073,
     "gender": "man",
+    "id" : 1,
     "marriages": [{
         "spouse": {
             "name": "? v. Perg (N)",
             "gender": "woman",
-            "died": 1136,
+            "died": 1100,
             "born": 1073,
             "marriage": 1085,
+            "id" : 2,
         },
         "children": [{
             "name": "Adalbert (14)",
-            "born": 1120,
+            "born": 1090,
             "died": 1138,
-            "gender": "woman",
+            "gender": "man",
+            "father" : 1, 
+            "id" : 3,
             "marriages": [{
                 "spouse": {
                     "name": "Adelheid (N)",
                     "gender": "woman",
-                    "born": 1120,
-                    "died": 1130,
-                    "marriage": 1125,
+                    "born": 1100,
+                    "died": 1125,
+                    "marriage": 1120,
+                    "id" : 4,
                 }
             },{
                 "spouse": {
                     "name": "Sophie (55)",
                     "gender": "woman",
-                    "born": 1120,
-                    "died": 1138,
-                    "marriage": 1130,
+                    "born": 1110,
+                    "died": 1145,
+                    "marriage": 1131,
+                    "id" : 5,
                 }
             }]
         }]
@@ -42,145 +48,182 @@ var persons = [{
             "gender": "woman",
             "died": 1177,
             "born": 1107,
-            "marriage": 1150,
+            "marriage": 1120,
+            "id" : 6,
         },
         "children": [{
             "name": "Heinrich II. (19)",
             "died": 1177,
-            "born": 1107,
+            "born": 1130,
             "gender": "man",
+            "father" : 1,
+            "id" : 7,
             "marriages": [{
                 "spouse": {
                     "name": "Gertrud (56)",
-                    "born": 1100,
-                    "died": 1143,
+                    "born": 1120,
+                    "died": 1150,
                     "gender": "woman",
-                    "marriage": 1120,
+                    "marriage": 1140,
+                    "id" : 8,
                 },
                 "children": [{
                     "name": "Richardis (N)",
-                    "born": 1100,
+                    "born": 1145,
                     "died": 1185,
                     "gender": "woman",
+                    "father" : 7,
+                    "id" : 9,
                 }]
             },{
                 "spouse": {
                     "name": "Theodora (57)",
-                    "born": 1100,
+                    "born": 1130,
                     "died": 1183,
                     "gender": "woman",
                     "marriage": 1160,
+                    "id" : 10,
                 },
                 "children": [{
                     "name": "Agnes (58)",
-                    "born": 1100,
+                    "born": 1165,
                     "died": 1184,
-                    "gender": "woman"
+                    "gender": "woman",
+                    "id" : 11,
+                    "father" : 7,
                 },{
                     "name": "Leopold V. (20)",
                     "died": 1194,
-                    "born": 1157,
+                    "born": 1165,
                     "gender": "man",
+                    "id" : 12,
+                    "father" : 7,
                     "marriages": [{
                         "spouse": {
                             "name": "Helene (60)",
                             "gender": "woman",
                             "born" : 1150,
                             "died" : 1200,
-                            "marriage": 1170,
+                            "marriage": 1180,
+                            "id" : 13,
                         },
                         "children": [{
                             "name": "Friedrich I. (23)",
                             "died": 1198,
-                            "born": 1175,
-                            "gender": "man"
+                            "born": 1180,
+                            "gender": "man",
+                            "id" : 14,
+                            "father" : 12,
                         },{
                             "name": "Leopold IV. (24)",
                             "died": 1230,
-                            "born": 1176,
+                            "born": 1180,
                             "gender": "man",
+                            "id" : 15,
+                            "father" : 12,
                             "marriages": [{
                                 "spouse": {
                                     "name": "Theodora (63)",
                                     "born": 1200,
                                     "died": 1246,
                                     "gender": "woman",
-                                    "marriage": 1220,
+                                    "marriage": 1210,
+                                    "id" : 16,
                                 },
                                 "children": [{
                                     "name": "Margarethe (64)",
-                                    "born": 1200,
+                                    "born": 1215,
                                     "died": 1266,
                                     "gender": "woman",
+                                    "id" : 17,
+                                    "father" : 15,
                                 },{
                                     "name": "Agnes (65)",
-                                    "born": 1200,
+                                    "born": 1215,
                                     "died": 1226,
                                     "gender": "woman",
+                                    "id" : 18,
+                                    "father" : 15,
                                 },{
                                     "name": "Leopold (25)",
-                                    "born": 1200,
-                                    "died": 1216,
-                                    "gender": "man"
+                                    "born": 1215,
+                                    "died": 1230,
+                                    "gender": "man",
+                                    "id" : 19,
+                                    "father" : 15,
                                 },{
                                     "name": "Heinrich (26)",
-                                    "born": 1200,
-                                    "died": 1227,
+                                    "born": 1215,
+                                    "died": 1250,
                                     "gender": "man",
+                                    "id" : 20,
+                                    "father" : 15,
                                     "marriages": [{
                                         "spouse": {
                                             "name": "Agnes (68V)",
                                             "gender": "woman",
                                             "born" : 1200,
                                             "died" : 1250,
-                                            "marriage": 1210,
+                                            "marriage": 1220,
+                                            "id" : 21,
                                         },
                                         "children" : [{
                                             "name" : "Gertrud (69)",
                                             "gender" : "woman",
-                                            "born" : 1200,
+                                            "born" : 1230,
                                             "died" : 1250,
+                                            "id" : 22,
+                                            "father" : 20,
                                         }]
                                     }]
                                 },{
                                     "name": "Friedrich II. (27)",
                                     "died": 1246,
-                                    "born": 1210,
+                                    "born": 1215,
                                     "gender": "man",
+                                    "id" : 23,
+                                    "father" : 15,
                                     "marriages" : [{
                                         "spouse" : {
                                             "name" : "Sophie (73V)",
                                             "gender" : "woman",
                                             "born" : 1200,
-                                            "died" : 1250,
-                                            "marriage": 1210,
+                                            "died" : 1230,
+                                            "marriage": 1220,
+                                            "id" : 24,
                                         }
                                     },{
                                         "spouse" : {
                                             "name" : "Agnes v. Meranien (72)",
                                             "gender" : "woman",
                                             "born": 1200,
-                                            "died" : 1260,
-                                            "marriage": 1230,
+                                            "died" : 1270,
+                                            "marriage": 1235,
+                                            "id" : 25,
                                         }
                                     }]
                                 },{
                                     "name": "Konstanze (66)",
-                                    "born": 1200,
+                                    "born": 1215,
                                     "died": 1243,
-                                    "gender": "woman"
+                                    "gender": "woman",
+                                    "id" : 26,
+                                    "father" : 15,
                                 },{
                                     "name": "Gertrud (67)",
-                                    "born" : 1200,
+                                    "born" : 1215,
                                     "died": 1241,
-                                    "gender": "woman"
+                                    "gender": "woman",
+                                    "id" : 27,
+                                    "father" : 15,
                                 }]
                             }]
                         },{
                             "name": "Agnes (61V)",
                             "gender": "woman",
-                            "born": 1100,
-                            "died": 1120
+                            "born": 1180,
+                            "died": 1200,
+                            "id" : 28,
                         }]
                     }]
                 },{
@@ -188,6 +231,8 @@ var persons = [{
                     "born": 1150,
                     "died": 1223,
                     "gender": "man",
+                    "id" : 29,
+                    "father" : 7,
                     "marriages": [{
                         "spouse": {
                             "name": "Richza (62)",
@@ -195,12 +240,14 @@ var persons = [{
                             "died": 1182,
                             "gender": "woman",
                             "marriage": 1155,
+                            "id" : 30,
                         },
                         "children": [{
                             "name": "Heinrich d.J. (22)",
                             "born": 1160,
                             "died": 1236,
-                            "gender": "man"
+                            "gender": "man",
+                            "id" : 31,
                         }]
                     }]
                 }]
@@ -210,6 +257,8 @@ var persons = [{
             "died": 1141,
             "born": 1108,
             "gender": "man",
+            "father" : 1,
+            "id" : 32,
             "marriages": [{
                 "spouse": {
                     "name": "Maria (59)",
@@ -217,43 +266,57 @@ var persons = [{
                     "died": 1141,
                     "born": 1108,
                     "marriage": 1120,
+                    "id" : 33,
                 }
             }]
         },{
             "name": "Berta (45)",
             "born": 1100,
             "died": 1150,
-            "gender": "woman"
+            "gender": "woman",
+            "father" : 1, 
+            "id" : 34,
         },{
             "name": "Agnes (46)",
             "born": 1100,
             "died": 1157,
-            "gender": "woman"
+            "gender": "woman",
+            "father" : 1, 
+            "id" : 35,
         },{
             "name": "Otto (16)",
             "died": 1158,
             "born": 1112,
-            "gender": "woman"
+            "gender": "man",
+            "father" : 1, 
+            "id" : 36,
         },{
             "name": "Konrad (17)",
             "died": 1168,
             "born": 1115,
-            "gender": "woman"
+            "gender": "man",
+            "id" : 37,
         },{
             "name": "Elisabeth (48)",
             "born": 1100,
             "died": 1143,
-            "gender": "woman"
+            "gender": "woman",
+            "father" : 1, 
+            "id" : 38,
         },{
             "name": "Gertrud (47)",
             "born": 1100,
             "died": 1151,
-            "gender": "woman"
+            "gender": "woman",
+            "father" : 1, 
+            "id" : 39,
         },{
             "name": "Judith (49)",
             "born": 1100,
             "died": 1191,
-            "gender": "woman"
+            "gender": "woman",
+            "father" : 1, 
+            "id" : 40,
         }]
     }]
 }];
@@ -290,99 +353,180 @@ var personInfoArray = [];
 var itterator = 0;
 var startY = 20;
 var marriageXDiff = 5;
-var marriageYDiff = 5;
+var marriageYDiff = 10;
 var yDiff = 50;
 var marriageCount = 1;
+
+var childArray = [];
+var showChildArray = [];
+var saveChildData = [{x: "", y: ""}, {x: "", y: ""}];
+var isChild = false;
+var isFather = false;
+var fatherArray = [];
+
 
 persons.forEach(person => {
    // console.log(person);
     //console.log(person.name + " " + person.born + " " + whichX(person.born));
-   /* personArray[itterator] = [{x: whichX(person.born), y: startY}, {x: whichX(person.died), y: startY}];
-    startY += yDiff;
-    itterator++;
-    console.log(personArray);*/
     isMarried(person);
 });
 
 function isMarried(person){
-
     if(typeof person.marriages != "undefined"){
-        marriageCount = 1;
-        //console.log(person.marriages);
-        //console.log(marriageCount);
-        var marriageX1 = whichX(person.marriages[marriageCount-1].spouse.marriage) - marriageXDiff;
-        var marriageX2 = whichX(person.marriages[marriageCount-1].spouse.marriage) + marriageXDiff;
-        var marriageY = startY + marriageYDiff;
-        personArray[itterator] = [
-            {x: whichX(person.born), y: startY, gender: person.gender}, 
-            {x: marriageX1, y: startY}, // marriage 1
-            {x: marriageX2, y: marriageY}, // marriage 2
-            {x: whichX(person.died), y: marriageY},
-        ];
-        personInfoArray[itterator] = {name: person.name, gender: person.gender, x: whichX(person.born), y: startY};
-        startY += yDiff;
-        itterator++;
-        console.log("person verheiratet");
-        console.log(person.name);
-    
         console.log("ist verheiratet");
-        person.marriages.forEach(marriage => {
-            //console.log(marriage.spouse.name + " " + marriage.spouse.born + " " + whichX(marriage.spouse.born));
-            // calculate marriage
-            var marriageX1 = whichX(marriage.spouse.marriage) - marriageXDiff;
-            var marriageX2 = whichX(marriage.spouse.marriage) + marriageXDiff;
+        console.log(person.name);
+        if(typeof person.marriages[0].children !== "undefined"){
+            isFather = true;
+            console.log("Father");
+        }
 
-            var marriageY = startY - marriageYDiff*marriageCount;
-            
-            personArray[itterator] = [
-                {x: whichX(marriage.spouse.born), y: startY, gender: marriage.spouse.gender}, // born
-                {x: marriageX1, y: startY}, // marriage 1
-                {x: marriageX2, y: marriageY}, // marriage 2
-                {x: whichX(marriage.spouse.died), y: marriageY}
-            ];
-            personInfoArray[itterator] = {name: marriage.spouse.name, gender: marriage.spouse.gender, x: whichX(marriage.spouse.born), y: startY};
-            console.log("in verheiratet");
+        marriageCount = 1;
+        pushInArray(person, "married");
+        
+        person.marriages.forEach(marriage => {
+            console.log("verheiratet mit");
             console.log(marriage.spouse.name);
-            
-            startY += yDiff;
-            itterator++;
-            marriageCount++;
-            //console.log(personArray);
+
+            pushInArray(marriage.spouse, "spouse");
+
             if(typeof marriage.children !== "undefined"){
                 console.log("hat Kinder");
-                marriage.children.forEach(child => {
-                    //console.log(child);
-                    //console.log(child.name + " " + child.born + " " + whichX(child.born));
-                   /* personArray[itterator] = [{x: whichX(child.born), y: startY, name: child.name}, {x: whichX(child.died), y: startY, name: child.name}];
-                    console.log("in Kind");
-                    console.log(child.name);
-                    
-                    startY += yDiff;
-                    itterator++;*/
-                    isMarried(child);
-                });
+                childArray.push(marriage);
             }else{
                 console.log("keine Kinder");
             }
         });
+        
+        childArray.forEach(spouse => {
+            childArray = [];
+            console.log("childArray is cleared");
+
+            spouse.children.forEach(child => {
+                isChild = true;
+                console.log("Kind");
+                console.log(child.name + " " + child.born + " " + whichX(child.born));
+                isMarried(child);
+            });
+        });
     }else{
         console.log("nicht verheiratet");
-
-        personArray[itterator] = [
-            {x: whichX(person.born), y: startY, gender: person.gender}, 
-            {x: whichX(person.died), y: startY},
-        ];
-        personInfoArray[itterator] = {name: person.name, gender: person.gender, x: whichX(person.born), y: startY};
-
-        console.log("in nicht verheiratet");
-        console.log(person.name);
-        startY += yDiff;
-        itterator++;
-
-        //return;
+        pushInArray(person, "child");
     }
 }
 
+function pushInArray(person, type){
+    console.log("pushinarray");
+    console.log(person);
+    // x1 - x-Child  y1 - middle of Father/Mother y3
+    // x2 - x-Child  y2 - y1 child
+    if(isChild){
+        isChild = false;
+        getFatherById(person.father);
+        var fatherY = getFatherY(father);
+        showChildArray.push([{x: whichX(person.born), y: fatherY + 15}, 
+            {x: whichX(person.born), y: startY}]);
+    }
+
+    switch (type) {
+        case "child":
+            console.log("child");
+            personArray[itterator] = [
+                {x: whichX(person.born), y: startY, gender: person.gender}, 
+                {x: whichX(person.died), y: startY},
+            ];
+            personInfoArray[itterator] = {name: person.name, gender: person.gender, x: whichX(person.born), y: startY};
+
+            console.log("in nicht verheiratet");
+            console.log(person.name);
+            startY += yDiff;
+            itterator++;
+            break;
+        
+        case "spouse":
+            console.log("spouse");
+            
+            var marriageX1 = whichX(person.marriage) - marriageXDiff;
+            var marriageX2 = whichX(person.marriage) + marriageXDiff;
+            var marriageY = startY - marriageYDiff - yDiff*(marriageCount-1);
+            
+            personArray[itterator] = [
+                {x: whichX(person.born), y: startY, gender: person.gender}, // born
+                {x: marriageX1, y: startY}, // marriage 1
+                {x: marriageX2, y: marriageY}, // marriage 2
+                {x: whichX(person.died), y: marriageY}
+            ];
+            personInfoArray[itterator] = {name: person.name, gender: person.gender, x: whichX(person.born), y: startY};
+            
+            startY += yDiff;
+            itterator++;
+            marriageCount++;
+            break;
+    
+        default:
+            console.log("default");
+            var marriageX1 = whichX(person.marriages[marriageCount-1].spouse.marriage) - marriageXDiff;
+            var marriageX2 = whichX(person.marriages[marriageCount-1].spouse.marriage) + marriageXDiff;
+            var marriageY = startY + marriageYDiff;
+            saveChildData[0].y = marriageY + 5;
+
+            fatherArray.push({y: marriageY, id: person.id});
+
+            personArray[itterator] = [
+                {x: whichX(person.born), y: startY, gender: person.gender}, 
+                {x: marriageX1, y: startY}, // marriage 1
+                {x: marriageX2, y: marriageY}, // marriage 2
+                {x: whichX(person.died), y: marriageY},
+            ];
+            personInfoArray[itterator] = {name: person.name, gender: person.gender, x: whichX(person.born), y: startY};
+            startY += yDiff;
+            itterator++;
+            break;
+    }
+}
+var father;
+var myId;
+
+function getFatherById(myIdF){
+    myId = myIdF;
+    console.log("search " + myId);
+    persons.forEach(person => {
+        getFatherByIdRecursive(person);
+    });
+}
+
+function getFatherByIdRecursive(person){
+    if(person.id == myId){
+        console.log("id found");
+        console.log(person);
+        father = person;
+    }
+    if(typeof person.marriages != "undefined"){
+        person.marriages.forEach(marriage => {
+            if(typeof marriage.children !== "undefined"){
+                marriage.children.forEach(child => {
+                    if(child.id == myId){
+                        console.log("id found");
+                        console.log(child);
+                        father = child;
+                    }else{
+                        getFatherByIdRecursive(child);
+                    }
+                });
+            }
+        });
+    }
+}
+
+function getFatherY(fatherSample){
+    console.log(fatherSample);
+    var fatherY = "";
+    fatherArray.forEach(father => {
+        if(father.id == fatherSample.id){
+            fatherY = father.y;
+        }
+    });
+    return fatherY;
+}
 
 var xAxis = d3.axisBottom(x);
 
@@ -416,7 +560,16 @@ var secondGroups = firstGroups.append("path")
     .attr("stroke-width", "25")
     .attr("d", function(d){ return line(d); });
    
-
+var thirdGroup = chartGroup.selectAll("g.third")
+    .data(showChildArray)
+    .enter().append("g")
+        .attr("class", "third");
+var fourthGroup = thirdGroup.append("path")
+    .attr("fill", "none")
+    .attr("stroke", "green")
+    .attr("stroke-width", "1")
+    .attr("stroke-dasharray", "10,10")
+    .attr("d", function(d){ return line(d); });
 
 // Adds names to 
     chartGroup.selectAll("text")
