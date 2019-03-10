@@ -17,13 +17,12 @@
 
 import UIKit
 import CoreLocation
-import KontaktSDK
 import Darwin
 
 
 class ViewController: UIViewController {
 
-    var beaconManager: KTKBeaconManager!
+    var locationManager: CLLocationManager!
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var statusLabel: UILabel!
@@ -103,7 +102,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        beaconManager = KTKBeaconManager(delegate: self)
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        print("viewdidload")
+        /*
         
         switch KTKBeaconManager.locationAuthorizationStatus() {
             case .notDetermined:
@@ -117,29 +120,31 @@ class ViewController: UIViewController {
                 print("access only when in use")
             case .authorizedAlways:
                 print("tbd")
-        }
+        }*/
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-}
-
-extension ViewController: KTKBeaconManagerDelegate{
-    func beaconManager(_ manager: KTKBeaconManager, didChangeLocationAuthorizationStatus status: CLAuthorizationStatus) {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeLocationAuthorizationStatus status: CLAuthorizationStatus) {
         if status == .authorizedAlways{
             // When status changes to CLAuthorizationStatus.authorizedAlways
             // e.g. after calling beaconManager.requestLocationAlwaysAuthorization()
             // we can start region monitoring from here
-            if KTKBeaconManager.isMonitoringAvailable() {
-                print("start scan")
-                startScanning()
+            print("scan")
+            if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.self) {
+                if CLLocationManager.isRangingAvailable() {
+                    print("start scan")
+                    startScanning()
+                }
             }
             
         }
@@ -147,43 +152,22 @@ extension ViewController: KTKBeaconManagerDelegate{
     
     func startScanning(){
         print("in start scan")
-        let myProximityUuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")
-        let region = KTKBeaconRegion(proximityUUID: myProximityUuid!, identifier: "Beacon region 1")
+        let uuid = UUID(uuidString: "f7826da6-4fa2-4e98-8024-bc5b71e0893e")!
+        let beaconRegion = CLBeaconRegion(proximityUUID: uuid, identifier: "Beacon region 1")
         
         
-        beaconManager.startMonitoring(for: region)
-        beaconManager.startRangingBeacons(in: region)
+        locationManager.startMonitoring(for: beaconRegion)
+        locationManager.startRangingBeacons(in: beaconRegion)
         
     }
-    
-    func beaconManager(_ manager: KTKBeaconManager, didStartMonitoringFor region: KTKBeaconRegion) {
-        // Do something when monitoring for a particular
-        // region is successfully initiated
-    }
-    
-    func beaconManager(_ manager: KTKBeaconManager, monitoringDidFailFor region: KTKBeaconRegion?, withError error: NSError?) {
-        // Handle monitoring failing to start for your region
-    }
-    
-    func beaconManager(_ manager: KTKBeaconManager, didEnter region: KTKBeaconRegion) {
-        // Decide what to do when a user enters a range of your region; usually used
-        // for triggering a local notification and/or starting a beacon ranging
-        manager.startRangingBeacons(in: region)
-    }
-    
-    func beaconManager(_ manager: KTKBeaconManager, didExitRegion region: KTKBeaconRegion) {
-        // Decide what to do when a user exits a range of your region; usually used
-        // for triggering a local notification and stoping a beacon ranging
-        manager.stopRangingBeacons(in: region)
-    }
-    
-    func beaconManager(_ manager: KTKBeaconManager, didRangeBeacons beacons: [CLBeacon], in region: KTKBeaconRegion) {
+    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
+        print(beacons)
         beaconList = []
         // Go through beacons, check if it is our and reliable --> push into empty beaconList
         beacons.forEach { beacon in
             if(isOurBeaconReliable(myBeacon: beacon)){
-               // if(beaconList.count == 0){
+                // if(beaconList.count == 0){
                 if(beacon.major == 10 && beacon.proximity == .immediate){
                     print("immediate")
                     beaconList.append(beacon)
@@ -191,15 +175,15 @@ extension ViewController: KTKBeaconManagerDelegate{
                     print("near")
                     beaconList.append(beacon)
                 }
-               /* }else{
-                    for(index, listBeacon) in beaconList.enumerated(){
-                        if(beacon.minor == listBeacon.minor){
-                            beaconList[index] = (beacon)
-                        }else{
-                            beaconList.append(beacon)
-                        }
-                    }
-                }*/
+                /* }else{
+                 for(index, listBeacon) in beaconList.enumerated(){
+                 if(beacon.minor == listBeacon.minor){
+                 beaconList[index] = (beacon)
+                 }else{
+                 beaconList.append(beacon)
+                 }
+                 }
+                 }*/
             }
         }
         
@@ -207,21 +191,21 @@ extension ViewController: KTKBeaconManagerDelegate{
         beaconList.sorted(by: { $0.rssi > $1.rssi })
         
         
-       /* print("-------")
-        
-        print(beaconList)*/
+        /* print("-------")
+         
+         print(beaconList)*/
         
         if beaconList.count>0{
             //updateDistance(beacons[0].proximity)
             
             //beaconList = beacons;
-        
+            
             tableView.reloadData()
             
             
             
             let myBeacon = beaconList[0]
-
+            
             
             let beacon1 = exhibits.index(where: { (exhibit) -> Bool in
                 if(exhibit["ble-minor"] as! Int == myBeacon.minor as! Int){
@@ -233,12 +217,12 @@ extension ViewController: KTKBeaconManagerDelegate{
                 return false
             })
             
-           // let beacon1 = keyOfBeacon(major: beaconArray[0].major as! Int)
-           // print("beacon \(String(describing: beacon1))")
-
+            // let beacon1 = keyOfBeacon(major: beaconArray[0].major as! Int)
+            // print("beacon \(String(describing: beacon1))")
+            
         }/*else{
-            updateDistance(.unknown)
-        }*/
+         updateDistance(.unknown)
+         }*/
     }
     
     
@@ -278,7 +262,33 @@ extension ViewController: KTKBeaconManagerDelegate{
             }
         }
     }
+}
 
+extension ViewController: CLLocationManagerDelegate{
+    
+    /*
+    func beaconManager(_ manager: KTKBeaconManager, didStartMonitoringFor region: KTKBeaconRegion) {
+        // Do something when monitoring for a particular
+        // region is successfully initiated
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, monitoringDidFailFor region: KTKBeaconRegion?, withError error: NSError?) {
+        // Handle monitoring failing to start for your region
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, didEnter region: KTKBeaconRegion) {
+        // Decide what to do when a user enters a range of your region; usually used
+        // for triggering a local notification and/or starting a beacon ranging
+        manager.startRangingBeacons(in: region)
+    }
+    
+    func beaconManager(_ manager: KTKBeaconManager, didExitRegion region: KTKBeaconRegion) {
+        // Decide what to do when a user exits a range of your region; usually used
+        // for triggering a local notification and stoping a beacon ranging
+        manager.stopRangingBeacons(in: region)
+    }
+    */
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource{

@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  ble-beacon-scan
+//  iosble
 //
-//  Created by Kerstin Blumenstein on 31/07/2017.
-//  Copyright © 2017 Kerstin Blumenstein. All rights reserved.
+//  Created by Kerstin Blumenstein on 05.03.19.
+//  Copyright © 2019 St. Pölten University of Applied Sciences. All rights reserved.
 //
 
 import UIKit
@@ -14,9 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
         return true
     }
 
